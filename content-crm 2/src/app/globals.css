@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* Dark mode is driven by a class on <html>, set by next-themes, so the toggle
+   wins over the OS setting in both directions. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+
+  /* The ink scale is semantic, not literal: 50 is the page, 900 is the title.
+     The .dark block below re-points each step, so `bg-ink-50` is a light page
+     in light mode and a dark one in dark mode without any dark: variants. */
+  --color-ink-50: #f6f6f7; /* page background */
+  --color-ink-100: #e9e9ec; /* hairline borders */
+  --color-ink-200: #d2d3d9; /* strong borders, muted fills */
+  --color-ink-400: #83848f; /* muted text */
+  --color-ink-600: #4a4b55; /* body text */
+  --color-ink-800: #26272e; /* emphasis */
+  --color-ink-900: #1a1b20; /* titles */
+
+  /* Cards and inputs sit above the page. */
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f1f1f3;
+
+  /* The sidebar stays dark in both modes, so these never flip. */
+  --color-nav: #121317;
+  --color-nav-line: #292a31;
+  --color-nav-hover: #1c1d22;
+  --color-nav-active: #2e2f38;
+  --color-nav-text: #f4f4f6;
+  --color-nav-muted: #8b8c97;
+
+  /* The post-preview phone. Deliberately absent from the .dark block: the
+     frame mimics a real phone running a dark app, so it must not invert. */
+  --color-device: #0b0c0f;
+  --color-device-screen-from: #4a4b55;
+  --color-device-screen-to: #16171b;
+
+  /* Chart series. Validated for colour-vision deficiency and contrast against
+     both surfaces; see the palette note in the README before changing them. */
+  --color-chart-1: #2a78d6;
+  --color-chart-2: #eb6834;
+  --color-chart-grid: #e6e6ea;
+  --color-chart-axis: #83848f;
+}
+
+.dark {
+  --color-ink-50: #101116;
+  --color-ink-100: #272830;
+  --color-ink-200: #3a3b45;
+  --color-ink-400: #8e8f9b;
+  --color-ink-600: #b7b8c2;
+  --color-ink-800: #e2e2e7;
+  --color-ink-900: #f4f4f7;
+
+  --color-surface: #1a1b20;
+  --color-surface-sunken: #15161a;
+
+  /* Dark steps for the same two hues, re-picked for the dark surface rather
+     than reused from light. */
+  --color-chart-1: #3987e5;
+  --color-chart-2: #d95926;
+  --color-chart-grid: #2b2c34;
+  --color-chart-axis: #8e8f9b;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-ink-50 text-ink-900 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-violet-600;
+  }
+}
+
+@layer utilities {
+  .scrollbar-slim {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink-200) transparent;
+  }
+
+  .scrollbar-slim::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+
+  .scrollbar-slim::-webkit-scrollbar-thumb {
+    background-color: var(--color-ink-200);
+    border-radius: 9999px;
+  }
+
+  .scrollbar-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
